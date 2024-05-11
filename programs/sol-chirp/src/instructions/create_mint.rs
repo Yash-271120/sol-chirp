@@ -1,11 +1,10 @@
 use anchor_lang::{prelude::*, solana_program::entrypoint::ProgramResult};
 use anchor_spl::{
-    associated_token::AssociatedToken,
     metadata::{
         create_metadata_accounts_v3, mpl_token_metadata::types::DataV2, CreateMetadataAccountsV3,
         Metadata,
     },
-    token::{mint_to, Mint, MintTo, Token, TokenAccount},
+    token::{Mint, Token},
 };
 
 use crate::state::LikeMintAuthorityPda;
