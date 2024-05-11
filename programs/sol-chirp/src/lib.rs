@@ -5,7 +5,7 @@ use instructions::*;
 pub mod instructions;
 pub mod state;
 
-declare_id!("5C7KLLMjVxQwsdJrSaXkPw67teuHZeDahgDKTKz55Fza");
+declare_id!("BPNvYAxjUvgNW6kH59qocT4aVYVPn74my67hEitNZ6v2");
 
 #[program]
 pub mod sol_chirp {

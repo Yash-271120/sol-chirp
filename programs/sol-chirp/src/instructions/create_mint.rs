@@ -1,10 +1,12 @@
-use anchor_lang::prelude::*;
-use anchor_lang::solana_program::entrypoint::ProgramResult;
+use anchor_lang::{prelude::*, solana_program::entrypoint::ProgramResult};
 use anchor_spl::{
-    metadata::{create_metadata_accounts_v3, CreateMetadataAccountsV3, Metadata},
-    token::{self, Token},
+    associated_token::AssociatedToken,
+    metadata::{
+        create_metadata_accounts_v3, mpl_token_metadata::types::DataV2, CreateMetadataAccountsV3,
+        Metadata,
+    },
+    token::{mint_to, Mint, MintTo, Token, TokenAccount},
 };
-use mpl_token_metadata::types::DataV2;
 
 use crate::state::LikeMintAuthorityPda;
 use crate::state::LikeMintMetadata;
@@ -53,6 +55,7 @@ pub fn create_like_mint(ctx: Context<CreateLikeMint>) -> ProgramResult {
 
 #[derive(Accounts)]
 pub struct CreateLikeMint<'info> {
+    /// CHECK: New Metaplex Account being created
     #[account(mut)]
     pub like_metadata: UncheckedAccount<'info>,
 
@@ -67,13 +70,13 @@ pub struct CreateLikeMint<'info> {
         mint::decimals = 9,
         mint::authority = like_authority.key(),
     )]
-    pub like_mint: Account<'info, token::Mint>,
+    pub like_mint: Account<'info, Mint>,
 
     // init authority
     #[account(
         init,
         payer = payer,
-        space = LikeMintAuthorityPda::INIT_SPACE,
+        space = 8+LikeMintAuthorityPda::INIT_SPACE,
         seeds = [
             LikeMintAuthorityPda::SEED_PREFIX.as_bytes().as_ref(),
             like_mint.key().as_ref(),
@@ -85,7 +88,7 @@ pub struct CreateLikeMint<'info> {
     pub payer: Signer<'info>,
     pub rent: Sysvar<'info, Rent>,
     pub system_program: Program<'info, System>,
-    pub token_program: Program<'info, token::Token>,
+    pub token_program: Program<'info, Token>,
     pub token_metadata_program: Program<'info, Metadata>,
 }
 
@@ -136,6 +139,8 @@ pub struct CreateRetweetMint<'info> {
     pub system_program: Program<'info, System>,
     pub token_program: Program<'info, Token>,
 
+    /// CHECK: New Metaplex Account being created
+    #[account(mut)]
     pub retweet_metadata: UncheckedAccount<'info>,
 
     // init mint
@@ -149,13 +154,13 @@ pub struct CreateRetweetMint<'info> {
         mint::decimals = 9,
         mint::authority = retweet_authority.key()
     )]
-    pub retweet_mint: Account<'info, token::Mint>,
+    pub retweet_mint: Account<'info, Mint>,
 
     //init mint authority
     #[account(
         init,
         payer = payer,
-        space=RetweetMintAuthorityPda::INIT_SPACE,
+        space=8+RetweetMintAuthorityPda::INIT_SPACE,
         seeds=[
             RetweetMintAuthorityPda::SEED_PREFIX.as_bytes().as_ref(),
             retweet_mint.key().as_ref()
