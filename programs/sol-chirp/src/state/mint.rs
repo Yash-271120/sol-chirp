@@ -8,7 +8,7 @@ impl LikeMintMetadata {
     pub const TITLE: &'static str = "SolChirp Like";
     pub const SYMBOL: &'static str = "SCL";
     pub const URI: &'static str =
-        "https://raw.githubusercontent.com/Yash-271120/sol-chirp/main/app_/assets/like.json";
+        "https://raw.githubusercontent.com/Yash-271120/sol-chirp/main/app/assets/like.json";
 }
 
 #[account]
@@ -33,7 +33,7 @@ impl RetweetMintMetadata {
     pub const TITLE: &'static str = "SolChirp Retweet";
     pub const SYMBOL: &'static str = "SCR";
     pub const URI: &'static str =
-        "https://raw.githubusercontent.com/Yash-271120/sol-chirp/main/app_/assets/retweet.json";
+        "https://raw.githubusercontent.com/Yash-271120/sol-chirp/main/app/assets/retweet.json";
 }
 
 #[account]
