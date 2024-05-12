@@ -26,4 +26,16 @@ pub mod sol_chirp {
     pub fn create_retweet_mint(ctx: Context<CreateRetweetMint>) -> ProgramResult {
         instructions::create_mint::create_retweet_mint(ctx)
     }
+
+    pub fn create_tweet(ctx: Context<CreateTweet>, body: String) -> ProgramResult {
+        instructions::create_tweet::create_tweet(ctx, body)
+    }
+
+    pub fn create_like(ctx: Context<CreateLike>) -> ProgramResult {
+        instructions::create_like::create_like(ctx)
+    }
+
+    pub fn create_retweet(ctx: Context<CreateRetweet>) -> ProgramResult {
+        instructions::create_retweet::create_retweet(ctx)
+    }
 }
