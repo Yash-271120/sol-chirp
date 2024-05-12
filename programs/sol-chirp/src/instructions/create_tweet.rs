@@ -1,3 +1,5 @@
+use std::ops::Add;
+
 use anchor_lang::{prelude::*,solana_program::entrypoint::ProgramResult};
 
 use crate::state::SolanaTweet;
@@ -16,9 +18,8 @@ pub fn create_tweet(
         body,
         ctx.bumps.tweet,
     );
-
     ctx.accounts.tweet.set_inner(tweet);
-    profile.tweet_count += 1;
+    profile.tweet_count.checked_add(1).unwrap();
     Ok(())
 }
 
@@ -26,29 +27,28 @@ pub fn create_tweet(
 #[derive(Accounts)]
 pub struct CreateTweet<'info> {
     #[account(
-        init, 
-        payer = authority, 
-        space = 8+SolanaTweet::INIT_SPACE, 
+        init,
+        payer = authority,
+        space = 8+SolanaTweet::INIT_SPACE,
         seeds = [
             SolanaTweet::SEED_PREFIX.as_bytes().as_ref(),
-            authority.key().as_ref(),
-            (profile.tweet_count+1).to_string().as_bytes().as_ref()
-            ], 
+            profile.key().as_ref(),
+            profile.tweet_count.add(1).to_string().as_ref(),
+        ],
         bump
     )]
     pub tweet: Account<'info, SolanaTweet>,
-
+    ///Check
     #[account(
         mut,
         has_one = authority,
         seeds = [
             SolChirpProfile::SEED_PREFIX.as_bytes().as_ref(),
-            authority.key().as_ref()
+            authority.key().as_ref(),
         ],
-        bump = profile.bump
+        bump = profile.bump,
     )]
     pub profile: Account<'info, SolChirpProfile>,
-
     #[account(mut)]
     pub authority: Signer<'info>,
     pub system_program: Program<'info, System>,
