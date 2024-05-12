@@ -90,7 +90,7 @@ pub struct CreateRetweet<'info> {
         space = 8 + SolanaRetweet::INIT_SPACE,
         seeds = [
             SolanaRetweet::SEED_PREFIX.as_bytes().as_ref(),
-            authority.key().as_ref(),
+            submitter_profile.key().as_ref(),
             tweet.tweet_number.to_string().as_bytes().as_ref(),
         ],
         bump,
