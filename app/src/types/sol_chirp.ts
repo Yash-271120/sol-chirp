@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/sol_chirp.json`.
  */
 export type SolChirp = {
-  "address": "BPNvYAxjUvgNW6kH59qocT4aVYVPn74my67hEitNZ6v2",
+  "address": "H26sRLnKwFvYM4pAe8mhLtnHaAqndNQpGEmpbrmmVhj8",
   "metadata": {
     "name": "solChirp",
     "version": "0.1.0",
@@ -321,6 +321,40 @@ export type SolChirp = {
         {
           "name": "systemProgram",
           "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "handle",
+          "type": "string"
+        },
+        {
+          "name": "displayName",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "createProfileAtas",
+      "discriminator": [
+        66,
+        150,
+        242,
+        62,
+        49,
+        193,
+        125,
+        26
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
         },
         {
           "name": "tokenProgram",
@@ -451,16 +485,7 @@ export type SolChirp = {
           "writable": true
         }
       ],
-      "args": [
-        {
-          "name": "handle",
-          "type": "string"
-        },
-        {
-          "name": "displayName",
-          "type": "string"
-        }
-      ]
+      "args": []
     },
     {
       "name": "createRetweet",
@@ -555,7 +580,8 @@ export type SolChirp = {
               },
               {
                 "kind": "account",
-                "path": "authority"
+                "path": "tweet.profile_pubkey",
+                "account": "solanaTweet"
               },
               {
                 "kind": "account",
@@ -588,8 +614,7 @@ export type SolChirp = {
               },
               {
                 "kind": "account",
-                "path": "tweet.tweet_number",
-                "account": "solanaTweet"
+                "path": "tweet"
               }
             ]
           }
@@ -669,6 +694,10 @@ export type SolChirp = {
         {
           "name": "tokenProgram",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "tokenMetadataProgram",
+          "address": "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
         },
         {
           "name": "retweetMetadata",
@@ -943,14 +972,6 @@ export type SolChirp = {
         "kind": "struct",
         "fields": [
           {
-            "name": "handle",
-            "type": "string"
-          },
-          {
-            "name": "displayName",
-            "type": "string"
-          },
-          {
             "name": "authority",
             "type": "pubkey"
           },
@@ -961,6 +982,14 @@ export type SolChirp = {
           {
             "name": "bump",
             "type": "u8"
+          },
+          {
+            "name": "handle",
+            "type": "string"
+          },
+          {
+            "name": "displayName",
+            "type": "string"
           }
         ]
       }

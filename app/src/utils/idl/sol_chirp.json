@@ -1,5 +1,5 @@
 {
-  "address": "BPNvYAxjUvgNW6kH59qocT4aVYVPn74my67hEitNZ6v2",
+  "address": "H26sRLnKwFvYM4pAe8mhLtnHaAqndNQpGEmpbrmmVhj8",
   "metadata": {
     "name": "sol_chirp",
     "version": "0.1.0",
@@ -315,6 +315,40 @@
         {
           "name": "system_program",
           "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "handle",
+          "type": "string"
+        },
+        {
+          "name": "display_name",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "create_profile_atas",
+      "discriminator": [
+        66,
+        150,
+        242,
+        62,
+        49,
+        193,
+        125,
+        26
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
         },
         {
           "name": "token_program",
@@ -445,16 +479,7 @@
           "writable": true
         }
       ],
-      "args": [
-        {
-          "name": "handle",
-          "type": "string"
-        },
-        {
-          "name": "display_name",
-          "type": "string"
-        }
-      ]
+      "args": []
     },
     {
       "name": "create_retweet",
@@ -549,7 +574,8 @@
               },
               {
                 "kind": "account",
-                "path": "authority"
+                "path": "tweet.profile_pubkey",
+                "account": "SolanaTweet"
               },
               {
                 "kind": "account",
@@ -582,8 +608,7 @@
               },
               {
                 "kind": "account",
-                "path": "tweet.tweet_number",
-                "account": "SolanaTweet"
+                "path": "tweet"
               }
             ]
           }
@@ -663,6 +688,10 @@
         {
           "name": "token_program",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "token_metadata_program",
+          "address": "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
         },
         {
           "name": "retweet_metadata",
@@ -937,14 +966,6 @@
         "kind": "struct",
         "fields": [
           {
-            "name": "handle",
-            "type": "string"
-          },
-          {
-            "name": "display_name",
-            "type": "string"
-          },
-          {
             "name": "authority",
             "type": "pubkey"
           },
@@ -955,6 +976,14 @@
           {
             "name": "bump",
             "type": "u8"
+          },
+          {
+            "name": "handle",
+            "type": "string"
+          },
+          {
+            "name": "display_name",
+            "type": "string"
           }
         ]
       }

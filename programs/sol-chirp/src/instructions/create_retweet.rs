@@ -13,11 +13,11 @@ pub fn create_retweet(ctx: Context<CreateRetweet>) -> ProgramResult {
         ctx.accounts.authority.key(),
         ctx.accounts.submitter_profile.key(),
         tweet.key(),
-        ctx.accounts.retweet_authority.key(),
+        ctx.accounts.authority.key(),
         ctx.bumps.retweet,
     );
 
-    tweet.retweet_count.checked_add(1).unwrap();
+    tweet.retweet_count = tweet.retweet_count.checked_add(1).unwrap();
     ctx.accounts.retweet.set_inner(retweet);
 
     mint_to(
@@ -67,7 +67,7 @@ pub struct CreateRetweet<'info> {
     #[account(
         mut,
         associated_token::mint = retweet_mint,
-        associated_token::authority = retweet_authority,
+        associated_token::authority = author_wallet,
     )]
     pub author_token_account: Account<'info, TokenAccount>,
 
@@ -76,7 +76,7 @@ pub struct CreateRetweet<'info> {
         mut,
         seeds = [
             SolanaTweet::SEED_PREFIX.as_bytes().as_ref(),
-            authority.key().as_ref(),
+            tweet.profile_pubkey.as_ref(),
             tweet.tweet_number.to_string().as_bytes().as_ref(),
         ],
         bump = tweet.bump,
@@ -91,7 +91,7 @@ pub struct CreateRetweet<'info> {
         seeds = [
             SolanaRetweet::SEED_PREFIX.as_bytes().as_ref(),
             submitter_profile.key().as_ref(),
-            tweet.tweet_number.to_string().as_bytes().as_ref(),
+            tweet.key().as_ref(),
         ],
         bump,
     )]

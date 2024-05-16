@@ -5,13 +5,13 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
-sol_chirp = "BPNvYAxjUvgNW6kH59qocT4aVYVPn74my67hEitNZ6v2"
+sol_chirp = "H26sRLnKwFvYM4pAe8mhLtnHaAqndNQpGEmpbrmmVhj8"
 
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "devnet"
+cluster = "Devnet"
 wallet = "~/.config/solana/id.json"
 
 [scripts]

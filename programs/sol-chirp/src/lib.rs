@@ -5,11 +5,15 @@ use instructions::*;
 pub mod instructions;
 pub mod state;
 
-declare_id!("BPNvYAxjUvgNW6kH59qocT4aVYVPn74my67hEitNZ6v2");
+declare_id!("H26sRLnKwFvYM4pAe8mhLtnHaAqndNQpGEmpbrmmVhj8");
 
 #[program]
 pub mod sol_chirp {
     use super::*;
+
+    pub fn create_profile_atas(ctx: Context<CreateProfileAtas>) -> ProgramResult {
+        instructions::create_profile_atas::create_profile_atas(ctx)
+    }
 
     pub fn create_profile(
         ctx: Context<CreateProfile>,

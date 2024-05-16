@@ -19,7 +19,7 @@ pub fn create_tweet(
         ctx.bumps.tweet,
     );
     ctx.accounts.tweet.set_inner(tweet);
-    profile.tweet_count.checked_add(1).unwrap();
+    profile.tweet_count = profile.tweet_count.checked_add(1).unwrap();
     Ok(())
 }
 

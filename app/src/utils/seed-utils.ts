@@ -1,6 +1,6 @@
 import * as anchor from "@coral-xyz/anchor";
 import * as constants from "./const";
-import { SolChirp } from "@/types/sol_chirp";
+import { SolChirp } from "../types/sol_chirp";
 
 export class SeedUtil {
   program: anchor.Program<SolChirp>;
@@ -77,6 +77,8 @@ export class SeedUtil {
       await this.program.account.solChirpProfile.fetch(this.profilePda)
     ).tweetCount as number;
 
+    console.log("tweetCount is : ", tweetCount);
+
     return this.derivePda([
       Buffer.from(constants.TWEET_SEED_PREFIX),
       this.profilePda.toBuffer(),
@@ -116,19 +118,19 @@ export class SeedUtil {
     ]);
   }
 
-  async getLikeTokenAccount(
+  getLikeTokenAccount(
     walletPubKey: anchor.web3.PublicKey
-  ): Promise<anchor.web3.PublicKey> {
-    return await anchor.utils.token.associatedAddress({
+  ): anchor.web3.PublicKey{
+    return anchor.utils.token.associatedAddress({
       mint: this.likeMintPda,
       owner: walletPubKey,
     });
   }
 
-  async getRetweetTokenAccount(
+  getRetweetTokenAccount(
     walletPubKey: anchor.web3.PublicKey
-  ): Promise<anchor.web3.PublicKey> {
-    return await anchor.utils.token.associatedAddress({
+  ): anchor.web3.PublicKey{
+    return anchor.utils.token.associatedAddress({
       mint: this.retweetMintPda,
       owner: walletPubKey,
     });

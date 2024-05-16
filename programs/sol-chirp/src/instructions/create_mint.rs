@@ -49,6 +49,12 @@ pub fn create_like_mint(ctx: Context<CreateLikeMint>) -> ProgramResult {
 
     msg!("Like mint created successfully");
 
+    let like_mint_authority =
+        LikeMintAuthorityPda::new(ctx.bumps.like_authority, ctx.bumps.like_mint);
+
+    ctx.accounts.like_authority.set_inner(like_mint_authority);
+
+    msg!("Like mint authority created successfully");
     return Ok(());
 }
 
@@ -127,6 +133,17 @@ pub fn create_retweet_mint(ctx: Context<CreateRetweetMint>) -> ProgramResult {
     )?;
 
     msg!("Retweet mint created successfully");
+
+
+    let retweet_mint_authority = RetweetMintAuthorityPda::new(
+        ctx.bumps.retweet_authority,
+        ctx.bumps.retweet_mint,
+    );
+
+    ctx.accounts.retweet_authority.set_inner(retweet_mint_authority);
+
+    msg!("Retweet mint authority created successfully");
+
     Ok(())
 }
 
@@ -137,6 +154,7 @@ pub struct CreateRetweetMint<'info> {
     pub rent: Sysvar<'info, Rent>,
     pub system_program: Program<'info, System>,
     pub token_program: Program<'info, Token>,
+    pub token_metadata_program: Program<'info, Metadata>,
 
     /// CHECK: New Metaplex Account being created
     #[account(mut)]

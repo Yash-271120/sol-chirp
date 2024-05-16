@@ -15,12 +15,12 @@ pub fn create_like(
         ctx.accounts.authority.key(),
         ctx.accounts.submitter_profile.key(),
         tweet.key(),
-        ctx.accounts.like_authority.key(),
+        ctx.accounts.authority.key(),
         ctx.bumps.like,
     );
 
     ctx.accounts.like.set_inner(like);
-    tweet.like_count.checked_add(1).unwrap();
+    tweet.like_count = tweet.like_count.checked_add(1).unwrap();
 
     mint_to(
         CpiContext::new_with_signer(
@@ -69,7 +69,7 @@ pub struct CreateLike<'info> {
     #[account(
         mut,
         associated_token::mint = like_mint,
-        associated_token::authority = like_authority,
+        associated_token::authority = author_wallet,
     )]
     pub author_token_account: Account<'info, TokenAccount>,
 
