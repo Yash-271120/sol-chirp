@@ -9,3 +9,4 @@ test-ledger
 
 app/node_modules
 app/.env
+app/.next

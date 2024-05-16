@@ -1,4 +1,3 @@
-import { MPL_TOKEN_METADATA_PROGRAM_ID as METADATA_PROGRAM_ID } from "@metaplex-foundation/mpl-token-metadata";
 import * as anchor from "@coral-xyz/anchor";
 import { AnchorWallet } from "@solana/wallet-adapter-react";
 import * as constants from "./const";
